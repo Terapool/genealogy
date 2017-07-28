@@ -1,0 +1,10 @@
+body {font-family: "Times New Roman"; font-size: 16px;}
+a {text-decoration: none}
+div#head {width: 100%; background: url("../img/logo-01.gif") no-repeat center; height: 125px; margin-top: 100px;}
+div#auth {width: 100%; text-align: center; margin-top:  50px;}
+div#auth a {color: #103221; padding: 5px; border: 2px solid #BED73D;}
+div#auth a:hover {background-color: #BED73D; }
+
+div#body {width: 100%; background: url("../img/logo-tree.gif") no-repeat center; height: 550px; margin-top: 100px;}
+
+div#footer {width: 100%; color: #103221; text-align: center; height: 125px; margin-top: 50px;}
