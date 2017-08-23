@@ -1,4 +1,4 @@
-body {font-family: "Times New Roman"; font-size: 16px;}
+body {font-family: Miriam; font-size: 16px;}
 a {text-decoration: none}
 div#head {width: 100%; background: url("../img/logo-01.gif") no-repeat center; height: 125px; margin-top: 100px;}
 div#auth {width: 100%; text-align: center; margin-top:  50px;}
@@ -8,3 +8,46 @@ div#auth a:hover {background-color: #BED73D; }
 div#body {width: 100%; background: url("../img/logo-tree.gif") no-repeat center; height: 550px; margin-top: 100px;}
 
 div#footer {width: 100%; color: #103221; text-align: center; height: 125px; margin-top: 50px;}
+
+
+
+/* Стили для ссылок Вход/Регистрация и соотв. форм*/
+.slide-active, .slide-frozen {display: block; padding: 15px auto 15px auto;
+    border: 2px #BED73D groove; width: 350px; margin: 15px auto; background: #DFEB9E;
+ }
+.slide-active, .slide-frozen, #cabinet-header, .notice {-webkit-box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);}
+.slide-active, .slide-frozen {border-radius: 55px 15px 15px 15px;
+    -moz-border-radius: 55px 15px 15px 15px;
+    -webkit-border-radius: 55px 15px 15px 15px;
+    border: 0px solid #000000; background: #DFEB9E;}
+.slide-frozen {background: #DFEB9E url("../img/preloader_02.gif") bottom left no-repeat;}
+.slide-disable {display: none;}
+.slider-tab-active {cursor: pointer}
+.slider-tab-inactive {cursor: default; color: grey;}
+.message-inactive {display: none;}
+.message-active {display: block; color: darkred; font-weight: bold;}
+
+form input {background-color: #FFFFFF; color: black; border: 1px solid black;}
+
+
+/* Текст на сайте */
+
+h2 {font-size: 18px; font-weight: bold; color: #103221}
+
+/* Личный кабинет */
+
+#cabinet-header {width: 100%; height: 45px; background: #DFEB9E url("../img/logo-tree-small.jpg") no-repeat left; text-align: right}
+#cabinet-header, .notice {border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;}
+
+#cabinet-header span {line-height: 45px; margin: 0 30px;}
+#cabinet-header-exit {cursor: pointer;}
+#cabinet-header-user { }
+#cabinet-header-preloader img {vertical-align: middle;}
+
+.notice { margin: 50px auto; width: 100%; }
+.notice p {color: #000000; text-align: center; padding: 50px;}
