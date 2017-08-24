@@ -5,6 +5,7 @@ div#auth {width: 100%; text-align: center; margin-top:  50px;}
 div#auth a {color: #103221; padding: 5px; border: 2px solid #BED73D;}
 div#auth a:hover {background-color: #BED73D; }
 
+div#auth div p {text-align: justify; padding: 10px 15px 5px 15px;}
 div#body {width: 100%; background: url("../img/logo-tree.gif") no-repeat center; height: 550px; margin-top: 100px;}
 
 div#footer {width: 100%; color: #103221; text-align: center; height: 125px; margin-top: 50px;}
@@ -34,7 +35,7 @@ form input {background-color: #FFFFFF; color: black; border: 1px solid black;}
 
 /* Текст на сайте */
 
-h2 {font-size: 18px; font-weight: bold; color: #103221}
+h2 {font-size: 18px; font-weight: bold; color: #103221; padding-top: 10px;}
 
 /* Личный кабинет */
 

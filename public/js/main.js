@@ -12,8 +12,8 @@ window.onload = function () {
 };
 // END window.onload
 function sliders() {   // Слайдеры аутентификации на главной странице сайта
-    var slides = ["slider1", "slider2"]; // Указываем id слайдеров
-    var tabs = ["slider1-tab", "slider2-tab"]; //Указываем  id табов от них, массив такой же длины
+    var slides = ["slider1", "slider2", "slider3"]; // Указываем id слайдеров
+    var tabs = ["slider1-tab", "slider2-tab", "slider3-tab"]; //Указываем  id табов от них, массив такой же длины
     for (var i = 0; i < slides.length; i++) {
         slides[i] = document.getElementById(slides[i]);// перезаписываем в массив сами элементы
         tabs[i] = document.getElementById(tabs[i]); // перезаписываем в массив сами элементы
@@ -37,6 +37,7 @@ function procForms() {
     authinbutton.addEventListener('click', toggleSignIn, false);
     registerbutton.addEventListener('click', handleSignUp, false);
 }
+// Обработчик - регистрация нового пользователя
 function handleSignUp()
 {
     makeFrozen("slider2", ["emailnew", "passwordnew", "passwordnew2", "registerbutton"], true);
