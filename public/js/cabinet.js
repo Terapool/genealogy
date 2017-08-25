@@ -1,16 +1,36 @@
 window.onload = function () {
+    var myPersons = [];
     setSignOutHandler();
-    var loadUserTimer = setInterval(prepareUserSettings, 500);
+    var loadUserTimer = setInterval(prepareUserSettings, 500); // Получаем юзера из БД
     addButtonHandler();
     function prepareUserSettings () {
-        var user = firebase.auth().currentUser;
-        if (user){
-            var headerUser = document.getElementById("cabinet-header-user");
-            var preloader = document.getElementById("cabinet-header-preloader");
-            preloader.style.display="none";
-            headerUser.innerHTML = user.email;
-            clearInterval(loadUserTimer);
-        }
+        var user = firebase.auth().currentUser; // Current user
+        if (user){ // После того, как прошла аутентификация
+            clearInterval(loadUserTimer); // убираем
+        } else {return}
+        var headerUser = document.getElementById("cabinet-header-user");
+        var preloader = document.getElementById("cabinet-header-preloader");
+        preloader.style.display="none";
+        headerUser.innerHTML = user.email;
+        // Если есть записи, читаем их
+        var ref = firebase.database().ref("users/" + user.uid);
+        var reader = ref.once('value').then(function(dataSnapshot) {
+            if (dataSnapshot.val()) {
+                myPersons =  dataSnapshot.val().persons;
+                console.log('БД подтянута');
+                console.log("Теперь массив пользователей такой: ");
+                console.log(myPersons);
+                buildTree();
+            } else {
+                console.log('БД у юзера не создана');
+            }
+        });
+    }
+    function addPersonToDB (person) {
+        var user = firebase.auth().currentUser; // Current user
+        var ref = firebase.database().ref("users/" + user.uid + "/persons/" + person.id);
+        ref.set(person);
+        console.log("В БД записан пользователь с id" + person.id)
     }
     function setSignOutHandler() {
         var signOutButton = document.getElementById("cabinet-header-exit");
@@ -43,7 +63,7 @@ window.onload = function () {
         document.getElementById("name").value="";
         document.getElementById("date").value="";
         document.getElementById("dialog-window-cancel").addEventListener("click",cancelDialogWindow, false);
-        document.getElementById("dialog-window-ok").addEventListener("click",createPerson, false);
+        document.getElementById("dialog-window-ok").addEventListener("click",createNewPerson, false);
 
     }
     function cancelDialogWindow() {
@@ -53,7 +73,6 @@ window.onload = function () {
 
     // Persons
 
-    var myPersons = [];
     function PersonConstr (id, photoUrl, name, birthDate, level, rel) {
         this.id = id;
         this.photoUrl = photoUrl;
@@ -62,7 +81,7 @@ window.onload = function () {
         this.level = level;
         this.rel = rel;
     }
-    function createPerson () {
+    function createNewPerson() {
         // Читаем форму
         var id = myPersons.length; // id for new person. 0 - 1st person, 1 - 2nd, etc.
         var name = document.getElementById("name").value;
@@ -74,7 +93,15 @@ window.onload = function () {
         var photoUrl = "img/photo-placeholder.gif";
         // Создаем объект в массиве карточек
         myPersons[id] = new PersonConstr (id, photoUrl, name, birthDate, level, rel);
+        // Сохраняем его в БД
+        addPersonToDB(myPersons[id]);
         console.log(myPersons);
+        displayPerson(id);
+        cancelDialogWindow();
+    }
+
+    function displayPerson (id) {
+
         // Создаем элемент карточки с заданным id, персональные данные берутся уже из объекта
         var element = document.createElement("div");
         var parent = document.getElementById(myPersons[id].level);
@@ -96,7 +123,13 @@ window.onload = function () {
         var levelFactor = levelFactor * 280; // умножаем количество карточек на ширину 1 карточки с учетом отступов
         parent.style.width = levelFactor + "px";
         parent.insertBefore(element, parent.firstChild); // Вставка элемента
-        cancelDialogWindow();
+
+    }
+    function buildTree() {
+        for (var i=0; i < myPersons.length; i++) {
+        displayPerson(i);
+        }
+
     }
 
 
