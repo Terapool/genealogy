@@ -26,12 +26,19 @@
     <!-- Pop-up layer -->
     <div id="point1">
         <div id="dialog-window">
-            <h2>Добавление нового пользователя</h2>
-            <div class="sector1">
-                <img src="img/photo-placeholder.gif" height="140" width="120"/>
+           <div class="s1"><h2 class="popup">Добавление нового пользователя</h2></div>
+            <div class="s2">
+                <div class="s2-1"><img src="img/photo-placeholder.gif" id="photoChange"/></div>
+                <div class="s2-2"><h3 class="popup">Фотография</h3>
+                    <br/>&nbsp;
+                    <input type="file" id="your-files" accept="image/*">
+                    <p id="warning-message"></p>
+                </div>
+                <p class="clear"/>
             </div>
-            <div class="sector2">
-                <form action="">
+            <div class="s3">
+
+                <form class="form-3">
                     Родственные связи: <select id="set-rel">
                     <option value="level0">сын</option>
                     <option value="level0">дочь</option>
@@ -49,8 +56,11 @@
                     Дата рождения: <input type="text" id="date"><br/><br/>
                 </form>
             </div>
-            <a id="dialog-window-cancel" title="Отменить">Отмена</a>
-            <a id="dialog-window-ok" title="Добавить карточку">Создать</a>
+            <div class="s4"><a id="dialog-window-cancel" title="Отменить">Отмена</a>
+                <a id="dialog-window-ok" title="Добавить карточку">Создать</a></div>
+
+
+
         </div>
     </div>
     <!--  End of Pop-up layer -->
@@ -62,26 +72,29 @@
     <div class="level levelB">
         <div id="level1">
             <!-- Personal card begin -->
-            <!--   <div class="card" id="card-me">
-                 <div class="card-photo">
-                     <img src="img/photo-placeholder.gif" height="140" width="120"/>
-                 </div>
-                 <div class="card-info">
-                     <div class="info-comment"><span>Это я</span></div>
-                     <div class="info-name"><span>Cbybwrfz Jkmuf Dfcbkmtdyf</span></div>
-                     <div class="info-manage-area"></div>
-                 </div>
-             </div> -->
-           <!-- End of card -->
+            <!--  <div class="card" id="card-me">
+                  <div class="card-photo">
+                      <img src="img/photo-placeholder.gif" height="140" width="120"/>
+                  </div>
+                  <div class="card-info">
+                      <div class="info-comment"><span>Это я</span></div>
+                      <div class="info-name"><span>Cbybwrfz Jkmuf Dfcbkmtdyf</span></div>
+                      <div class="info-manage-area">
+
+                          <a class="trash-button" title="Удалить карточку"></a>
+                      </div>
+                  </div> -->
+              </div>
+            <!-- End of card -->
             <p class="clear"/>
         </div>
     </div>
-    <div class="level levelA">
+    <div class="level levelC">
         <div id="level2">
             <p class="clear"/>
         </div>
     </div>
-    <div class="level levelB">
+    <div class="level levelD">
         <div id="level3">
             <p class="clear"/>
         </div>

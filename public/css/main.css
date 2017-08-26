@@ -36,8 +36,9 @@ form input {background-color: #FFFFFF; color: black; border: 1px solid black;}
 /* Текст на сайте */
 h1 {font-size: 22px; font-weight: bold; color: #103221; padding-top: 10px; text-align: center}
 h2 {font-size: 18px; font-weight: bold; color: #103221; padding-top: 10px; text-align: center}
+h2.popup {margin: 0 auto; line-height: 30px; padding: 0;}
 h3 {text-align: center; font-weight: bold; font-size: 16px; color: #83942A}
-
+h3.popup {margin: 0 auto; line-height: 30px; padding: 0; }
 /* Личный кабинет */
 
 #cabinet-header {width: 100%; height: 45px; background: #DFEB9E url("../img/logo-tree-small.jpg") no-repeat left; text-align: right}
@@ -82,10 +83,18 @@ div#dialog-window {border-radius: 10px 10px 10px 10px;
 div#dialog-window {-webkit-box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 11px -2px rgba(0,0,0,0.75);}
-div.sector1 {width: 100%; border-bottom: 1px solid #cccccc; text-align: center}
-div.sector2 {margin: 15px auto auto 15px; }
 
-div#dialog-window a {display: inline-block; height: 35px; width: 150px; margin: 15px 20px;}
+div.s1 {width: 400px; height: 30px;}
+div.s2 {width: 400px; height: 170px;}
+    div.s2-1 {float: left; width: 150px; height: 170px;}
+        div.s2-1 img {margin: 15px; max-width: 120px; height: 140px;}
+    div.s2-2 {float: left; width: 250px; height: 170px;}
+        p#warning-message {text-align: center; color: darkred; margin: 10px auto; padding: 0px;}
+div.s3 {width: 370px; height: 125px; padding: 15px 15px 10px 15px;}
+
+div.s4 {width: 400px; height: 50px;}
+
+div#dialog-window a {display: inline-block; height: 35px; width: 150px; margin: 5px 20px 10px 20px;}
 div#dialog-window a {border-radius: 10px 10px 10px 10px;
     -moz-border-radius: 10px 10px 10px 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
@@ -102,8 +111,14 @@ div#dialog-window a {line-height: 35px; text-align: center; color: #103221;
     /* Gentree */
     /* Strips */
 div.level {height: 200px; width: 100%; border:solid white; border-width: 5px 0; text-align: center}
-div.levelA { background: #DFEB9E;}
-div.levelB { background: #BED73D;}
+div.levelA { background: url("../img/bg0.png") no-repeat left #DFEB9E;}
+div.levelB { background: url("../img/bg1.png") no-repeat left #BED73D;}
+div.levelC { background: url("../img/bg2.png") no-repeat left #DFEB9E;}
+div.levelD { background: url("../img/bg3.png") no-repeat left #BED73D;}
+
+
+
+
 div.level > div {margin: 0px auto; height: 200px; width: 0px;}
     /* Cards */
 div.card {height: 170px; width: 250px; background: #ffffff; margin: 15px; float:left;}
@@ -127,3 +142,10 @@ div.card-info {width: 100px;}
         div.info-name span {font-size: 16px; color: black; line-height: 18px;}
     div.info-manage-area {height: 30px; padding: 5px 15px 15px 15px;}
 
+/* showBigCard */
+
+a.trash-button {display: block  ; height: 25px; width: 25px;
+    background: url("../img/trash-icon.gif") top left no-repeat; background-position: 0 0;
+margin: 15px; cursor: pointer;}
+
+a.trash-button:hover {background-position: 0 -25px;}
