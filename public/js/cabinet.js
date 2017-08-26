@@ -3,39 +3,52 @@ window.onload = function () {
     setSignOutHandler();
     var loadUserTimer = setInterval(prepareUserSettings, 500); // Получаем юзера из БД
     addButtonHandler();
-    function prepareUserSettings () {
+
+    function prepareUserSettings() {
         var user = firebase.auth().currentUser; // Current user
-        if (user){ // После того, как прошла аутентификация
+        if (user) { // После того, как прошла аутентификация
             clearInterval(loadUserTimer); // убираем
-        } else {return}
+        } else {
+            return
+        }
         var headerUser = document.getElementById("cabinet-header-user");
         var preloader = document.getElementById("cabinet-header-preloader");
-        preloader.style.display="none";
+        preloader.style.display = "none";
         headerUser.innerHTML = user.email;
         // Если есть записи, читаем их
         var ref = firebase.database().ref("users/" + user.uid);
-        var reader = ref.once('value').then(function(dataSnapshot) {
+        var reader = ref.once('value').then(function (dataSnapshot) {
             if (dataSnapshot.val()) {
-                myPersons =  dataSnapshot.val().persons;
+                myPersons = dataSnapshot.val().persons;
                 console.log('БД подтянута');
-                console.log("Теперь массив пользователей такой: ");
-                console.log(myPersons);
                 buildTree();
             } else {
                 console.log('БД у юзера не создана');
             }
         });
+        // Ставим Listener на изменения
+        ref = firebase.database().ref("users/" + user.uid + "/persons");
+        ref.on('value', function (snapshot) {
+            if (snapshot.val()) {
+                myPersons = snapshot.val();// Если snapshot.val() не null, то пускай остается []
+            }
+            clearTree();
+            buildTree();
+        });
     }
-    function addPersonToDB (person) {
+
+    function addPersonToDB(person) {
         var user = firebase.auth().currentUser; // Current user
         var ref = firebase.database().ref("users/" + user.uid + "/persons/" + person.id);
         ref.set(person);
-        console.log("В БД записан пользователь с id" + person.id)
+        console.log("В БД записан пользователь с id" + person.id);
     }
+
     function setSignOutHandler() {
         var signOutButton = document.getElementById("cabinet-header-exit");
         signOutButton.onclick = signOutHandler;
     }
+
     function signOutHandler(obj) {
         if (obj.target.id === "cabinet-header-exit") {
             if (firebase.auth().currentUser) {
@@ -49,23 +62,27 @@ window.onload = function () {
             window.location = "index.htm";
         }
     }
-    function addButtonHandler () { // Назначаем обработчика для кнопки "Добавить карточку"
+
+    function addButtonHandler() { // Назначаем обработчика для кнопки "Добавить карточку"
         var addButton = document.getElementById("button-add-person");
         addButton.addEventListener("click", buttonHandler, false);
     }
-    function buttonHandler () { // Обработчик для кнопки "Добавить карточку"
+
+    function buttonHandler() { // Обработчик для кнопки "Добавить карточку"
         var dialogW = document.getElementById("dialog-window");
         clearDialogWindow();
         dialogW.style.display = "block";
 
     }
-    function clearDialogWindow () {
-        document.getElementById("name").value="";
-        document.getElementById("date").value="";
-        document.getElementById("dialog-window-cancel").addEventListener("click",cancelDialogWindow, false);
-        document.getElementById("dialog-window-ok").addEventListener("click",createNewPerson, false);
+
+    function clearDialogWindow() {
+        document.getElementById("name").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("dialog-window-cancel").addEventListener("click", cancelDialogWindow, false);
+        document.getElementById("dialog-window-ok").addEventListener("click", createNewPerson, false);
 
     }
+
     function cancelDialogWindow() {
         var dialogW = document.getElementById("dialog-window");
         dialogW.style.display = "none";
@@ -73,7 +90,7 @@ window.onload = function () {
 
     // Persons
 
-    function PersonConstr (id, photoUrl, name, birthDate, level, rel) {
+    function PersonConstr(id, photoUrl, name, birthDate, level, rel) {
         this.id = id;
         this.photoUrl = photoUrl;
         this.name = name;
@@ -81,6 +98,7 @@ window.onload = function () {
         this.level = level;
         this.rel = rel;
     }
+
     function createNewPerson() {
         // Читаем форму
         var id = myPersons.length; // id for new person. 0 - 1st person, 1 - 2nd, etc.
@@ -92,15 +110,14 @@ window.onload = function () {
         var rel = selectTagEl.options[selectedIndex].text; // Комментарий карточки (бабушка, дедушка)
         var photoUrl = "img/photo-placeholder.gif";
         // Создаем объект в массиве карточек
-        myPersons[id] = new PersonConstr (id, photoUrl, name, birthDate, level, rel);
+        myPersons[id] = new PersonConstr(id, photoUrl, name, birthDate, level, rel);
         // Сохраняем его в БД
         addPersonToDB(myPersons[id]);
         console.log(myPersons);
-        displayPerson(id);
         cancelDialogWindow();
     }
 
-    function displayPerson (id) {
+    function displayPerson(id) {
 
         // Создаем элемент карточки с заданным id, персональные данные берутся уже из объекта
         var element = document.createElement("div");
@@ -108,10 +125,10 @@ window.onload = function () {
         element.className = "card";
         element.id = myPersons[id].id;
         // innerHTML content
-        var innerContent="";
+        var innerContent = "";
         innerContent = '<div class="card-photo"><img src="';
         innerContent += myPersons[id].photoUrl;
-        innerContent +='" height="140" width="120"/></div><div class="card-info"><div class="info-comment"><span>';
+        innerContent += '" height="140" width="120"/></div><div class="card-info"><div class="info-comment"><span>';
         innerContent += myPersons[id].rel;
         innerContent += '</span></div><div class="info-name"><span>';
         innerContent += myPersons[id].name;
@@ -125,13 +142,18 @@ window.onload = function () {
         parent.insertBefore(element, parent.firstChild); // Вставка элемента
 
     }
+
     function buildTree() {
-        for (var i=0; i < myPersons.length; i++) {
-        displayPerson(i);
+        for (var i = 0; i < myPersons.length; i++) {
+            displayPerson(i);
         }
-
     }
-
+    function clearTree() {
+        var arrayOfLevels = ["level0", "level1", "level2", "level3"];
+        for (var i = 0; i < arrayOfLevels.length; i++) {
+            document.getElementById(arrayOfLevels[i]).innerHTML = '<p class="clear" />';
+        }
+    }
 
 };
 
