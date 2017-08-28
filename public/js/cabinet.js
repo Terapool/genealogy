@@ -1,6 +1,5 @@
 window.onload = function () {
     var myPersons = [];
-    var myPersonsTemp = [];
     var currentElement; // Global var for current el
     setSignOutHandler();
     var loadUserTimer = setInterval(prepareUserSettings, 500); // Получаем юзера из БД
@@ -34,6 +33,7 @@ window.onload = function () {
             if (snapshot.val()) {
                 myPersons = snapshot.val();// Если snapshot.val() не null, то пускай остается []
             }
+
             clearTree();
             buildTree();
         });
@@ -44,15 +44,6 @@ window.onload = function () {
         var ref = firebase.database().ref("users/" + user.uid + "/persons/" + person.id);
         ref.set(person);
         console.log("В БД записан пользователь с id" + person.id);
-    }
-    function rewritePersonsInDB() {
-        var user = firebase.auth().currentUser; // Current user
-        var ref = firebase.database().ref("users/" + user.uid + "/persons");
-        ref.set(null);
-        console.log("Стерли всех пользователей в БД");
-        for (var i=0; i < myPersonsTemp.length; i++) {
-            addPersonToDB(myPersonsTemp[i]);
-        }
     }
 
     function setSignOutHandler() {
@@ -163,6 +154,7 @@ window.onload = function () {
         this.birthDate = birthDate;
         this.level = level;
         this.rel = rel;
+        this.disable = false; // Для возможности удалять
     }
 
     function createNewPerson(photoUrl) {
@@ -184,7 +176,7 @@ window.onload = function () {
     }
 
     function displayPerson(id) {
-
+        if(myPersons[id].disable) {return}
         // Создаем элемент карточки с заданным id, персональные данные берутся уже из объекта
         var element = document.createElement("div");
         var parent = document.getElementById(myPersons[id].level);
@@ -212,24 +204,16 @@ window.onload = function () {
             var answ = confirm("Действительно удалить эту карточку?");
             if (answ) {
                 console.log("Поступил запрос на удаление карточки с id=" + myPersons[id].id);
-                deleteCard(myPersons[id].id);
-                rewritePersonsInDB();
+
+                myPersons[id].disable = true;
+                addPersonToDB(myPersons[id]);
             } else {
                 console.log("Не будем удалять");
             }
                                             }, false);
         console.log(element);
     }
-    function deleteCard(id) {
-        myPersonsTemp =[];
-        for (var i = 0; i < myPersons.length; i++) {
-            if (!(i === id)) {
-                myPersonsTemp.push(myPersons[i]);
-            }
-        }
-        console.log(myPersons);
-        console.log(myPersonsTemp);
-    }
+
 
     function buildTree() {
         for (var i = 0; i < myPersons.length; i++) {
