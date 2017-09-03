@@ -1,0 +1,22 @@
+{
+  "name": "genealogy",
+  "version": "1.0.0",
+  "description": "Сайт проекта позволяет зарегистрированным пользователям составлять свое генеалогическое дерево в наглядном виде и добавлять информацию о своих родственниках.",
+  "main": "public/index.htm",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Terapool/genealogy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Terapool/genealogy/issues"
+  },
+  "homepage": "https://github.com/Terapool/genealogy#readme",
+  "dependencies": {
+    "firebase": "^4.3.0"
+  }
+}
